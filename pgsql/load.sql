@@ -8,8 +8,12 @@ CREATE OR REPLACE FUNCTION osmcounts_states_containing(way geometry(Geometry, 38
 	STABLE
 	AS $$
 	
-	SELECT array_agg(stusps)
+	SELECT array_agg(geoid)
 	FROM osmcounts_us_state
+	WHERE ST_Intersects(way, geom)
+	UNION ALL
+	SELECT array_agg(geoid)
+	FROM osmcounts_us_cbsa
 	WHERE ST_Intersects(way, geom);
 $$;
 

@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS osmcounts_us_state;
+DROP TABLE IF EXISTS osmcounts_us_cbsa;
 DROP TABLE IF EXISTS osmcounts_ecus2012;
 DROP FUNCTION IF EXISTS osmcounts_states_containing(geometry(Geometry, 3857));
 DROP FUNCTION IF EXISTS osmcounts_poi_category(

@@ -8,6 +8,11 @@ echo 'Loading state geometries...'
 
 shp2pgsql -s 4269:3857 -I data/shp/cb_2013_us_state_500k.shp osmcounts_us_state | psql -h osmdb.eqiad.wmnet -U osm gis
 
+echo 'Loading CBSA geometries...'
+
+# wget ftp://ftp.census.gov/geo/tiger/TIGER2012/CBSA/tl_2012_us_cbsa.zip
+shp2pgsql -s 4269:3857 -W LATIN1 -I data/shp/tl_2012_us_cbsa.shp osmcounts_us_cbsa | psql -h osmdb.eqiad.wmnet -U osm gis
+
 echo 'Loading tables and functions...'
 
 psql -h osmdb.eqiad.wmnet -U osm gis -f pgsql/load.sql

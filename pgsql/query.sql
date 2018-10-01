@@ -16,7 +16,7 @@ FROM (
         tourism,
         tags) AS naics, count(*) AS count
     FROM planet_osm_point
-    WHERE ST_Intersects(way, osmcounts_us_geometry()) AND coalesce(amenity, historic, leisure, man_made, office, power, shop, tourism) IS NOT NULL
+    WHERE ST_Intersects(way, osmcounts_us_geometry()) AND coalesce(amenity, historic, leisure, man_made, office, power, shop, tourism) IS NOT NULL AND naics IS NOT NULL
     GROUP BY naics, state
     UNION ALL
     SELECT unnest(osmcounts_states_containing(way)) AS state, osmcounts_poi_category(
@@ -33,8 +33,7 @@ FROM (
         tourism,
         tags) AS naics, count(*) AS count
     FROM planet_osm_polygon
-    WHERE way && osmcounts_us_geometry() AND coalesce(amenity, historic, leisure, man_made, office, power, shop, tourism) IS NOT NULL
+    WHERE way && osmcounts_us_geometry() AND coalesce(amenity, historic, leisure, man_made, office, power, shop, tourism) IS NOT NULL AND naics IS NOT NULL
     GROUP BY naics, state) counts
-WHERE naics IS NOT NULL
 GROUP BY naics, state
 ORDER BY state ASC, naics ASC;
